@@ -8,7 +8,7 @@ import java.util.Map;
 
 @Getter
 @Entity
-public class StoreEntity {
+public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeId;
@@ -19,11 +19,11 @@ public class StoreEntity {
     @JoinColumn(name = "store_id"))
     private Map<Long, Integer> inventory;
 
-    protected StoreEntity() {
+    protected Store() {
 
     }
 
-    public StoreEntity(String name) {
+    public Store(String name) {
         this.name = name;
         this.inventory = new HashMap<>();
     }

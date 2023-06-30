@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private final CustomerRepository repository;
 
-    public CustomerEntity findById(long customerId) {
+    public Customer findById(long customerId) {
         return repository.findById(customerId).orElseThrow();
     }
 }

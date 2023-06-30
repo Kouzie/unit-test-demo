@@ -1,4 +1,4 @@
-package com.demo.unit.controller;
+package com.demo.unit.ui;
 
 import com.demo.unit.domain.purchase.PurchaseService;
 import lombok.RequiredArgsConstructor;

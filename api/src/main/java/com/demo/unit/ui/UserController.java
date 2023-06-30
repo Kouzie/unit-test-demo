@@ -1,7 +1,7 @@
-package com.demo.unit.controller;
+package com.demo.unit.ui;
 
 import com.demo.unit.adaptor.IEmailGateway;
-import com.demo.unit.domain.user.UserEntity;
+import com.demo.unit.domain.user.User;
 import com.demo.unit.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +14,8 @@ public class UserController {
     private final IEmailGateway emailGateway;
 
     public void renameUser(long userId, String userName) {
-        UserEntity user = service.findById(userId);
-        user.setName(userName);
+        User user = service.findById(userId);
+        user.updateName(userName);
         service.save(user);
     }
 

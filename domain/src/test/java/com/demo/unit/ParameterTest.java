@@ -1,7 +1,7 @@
 package com.demo.unit;
 
-import com.demo.unit.domain.product.ProductEntity;
-import com.demo.unit.domain.store.StoreEntity;
+import com.demo.unit.domain.product.Product;
+import com.demo.unit.domain.store.Store;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,9 +22,9 @@ public class ParameterTest {
     })
     void purchase_failed_when_not_enough_inventory(int quantity, int expectedQuantity) {
         // 준비
-        ProductEntity shampoo = new ProductEntity("shampoo");
+        Product shampoo = new Product("shampoo");
         long productId = 1l;
-        StoreEntity sut = createStoreWithInventory(productId, 10);
+        Store sut = createStoreWithInventory(productId, 10);
 
         // 실행
         sut.removeInventory(productId, quantity);
@@ -33,8 +33,8 @@ public class ParameterTest {
         Assertions.assertEquals(expectedQuantity, sut.getInventory(productId));
     }
 
-    private StoreEntity createStoreWithInventory(long productId, int quantity) {
-        StoreEntity store = new StoreEntity("sample store");
+    private Store createStoreWithInventory(long productId, int quantity) {
+        Store store = new Store("sample store");
         store.addInventory(productId, quantity);
         return store;
     }

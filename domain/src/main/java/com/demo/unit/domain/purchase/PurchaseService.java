@@ -1,6 +1,6 @@
 package com.demo.unit.domain.purchase;
 
-import com.demo.unit.domain.store.StoreEntity;
+import com.demo.unit.domain.store.Store;
 import com.demo.unit.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ public class PurchaseService {
 
     @Transactional
     public boolean purchase(long storeId, long productId, int quantity) {
-        StoreEntity store = storeRepository.findById(storeId).orElseThrow();
+        Store store = storeRepository.findById(storeId).orElseThrow();
         if (!store.hasEnoughInventory(productId, quantity)) {
             return false;
         }

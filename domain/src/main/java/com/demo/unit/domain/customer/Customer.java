@@ -9,17 +9,17 @@ import javax.persistence.Id;
 
 @Getter
 @Entity
-public class CustomerEntity {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
     private String name;
 
-    protected CustomerEntity() {
+    protected Customer() {
     }
 
-    public CustomerEntity(String name) {
+    public Customer(String name) {
         this.name = name;
     }
 }

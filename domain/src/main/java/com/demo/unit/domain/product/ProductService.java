@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     private final ProductRepository repository;
 
-    public ProductEntity findById(long productId) {
+    public Product findById(long productId) {
         return repository.findById(productId).orElseThrow();
     }
 }

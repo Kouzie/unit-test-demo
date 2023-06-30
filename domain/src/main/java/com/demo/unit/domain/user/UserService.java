@@ -1,5 +1,6 @@
 package com.demo.unit.domain.user;
 
+import com.demo.unit.domain.company.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,14 +9,23 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository repository;
+    private final CompanyRepository companyRepository;
 
     @Transactional(readOnly = true)
-    public UserEntity findById(long userId) {
+    public User findById(long userId) {
         return repository.findById(userId).orElseThrow();
     }
 
     @Transactional
-    public UserEntity save(UserEntity user) {
+    public User save(User user) {
         return repository.save(user);
+    }
+
+    @Transactional
+    public void changeEmail(long userId, String newEmail) {
+        User user = repository.findById(userId).orElseThrow();
+        String emailDomain = newEmail.split("@")[1];
+        if (user.getEmail().equals(newEmail)) return;
+        user.changeEmail(newEmail);
     }
 }

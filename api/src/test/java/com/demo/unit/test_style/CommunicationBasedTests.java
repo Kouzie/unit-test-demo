@@ -2,7 +2,7 @@ package com.demo.unit.test_style;
 
 import com.demo.unit.adaptor.IEmailGateway;
 import com.demo.unit.domain.user.UserService;
-import com.demo.unit.controller.UserController;
+import com.demo.unit.ui.UserController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
