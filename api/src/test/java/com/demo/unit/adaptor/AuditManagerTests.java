@@ -11,34 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+// AuditManager 클래스를 함수형 프로그래밍 방식으로 변경
 public class AuditManagerTests {
     DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
-
-    /*@Test
-    public void a_new_file_is_created_when_the_current_file_overflows() throws IOException {
-        LocalDateTime now = LocalDateTime.now();
-        String visitorName = "Alice";
-        String newRecord = visitorName + ";" + dtf.format(now);
-        IFileSystem fileSystem = Mockito.mock(IFileSystem.class);
-        Mockito.when(fileSystem.getDirPath("audits"))
-                .thenReturn("/audits/");
-        Mockito.when(fileSystem.getFilePaths("audits"))
-                .thenReturn(List.of(
-                        "/audits/audit_1.txt",
-                        "/audits/audit_2.txt"
-                ));
-        Mockito.when(fileSystem.readAllLines("/audits/audit_2.txt"))
-                .thenReturn(List.of(
-                        "Peter; 2019-04-06T16:30:00",
-                        "Jane; 2019-04-06T16:40:00",
-                        "Jack; 2019-04-06T17:00:00"
-                ));
-
-        AuditManager sut = new AuditManager("audits", 3, fileSystem);
-        sut.addRecord(visitorName, now);
-
-        Mockito.verify(fileSystem).writeAllText("/audits/audit_3.txt", newRecord);
-    }*/
 
     @Test
     public void a_new_file_is_created_when_the_current_file_overflows() throws IOException {

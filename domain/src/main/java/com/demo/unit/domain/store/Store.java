@@ -15,8 +15,7 @@ public class Store {
     private String name;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "store_inventory", joinColumns =
-    @JoinColumn(name = "store_id"))
+    @CollectionTable(name = "store_inventory", joinColumns = @JoinColumn(name = "store_id"))
     private Map<Long, Integer> inventory;
 
     protected Store() {

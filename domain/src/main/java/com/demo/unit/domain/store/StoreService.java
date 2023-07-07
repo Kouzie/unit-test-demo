@@ -11,4 +11,8 @@ public class StoreService {
     public Store findById(long storeId) {
         return repository.findById(storeId).orElseThrow();
     }
+
+    public Store save(Store store) {
+        return repository.save(store);
+    }
 }

@@ -2,22 +2,32 @@ package com.demo.unit.domain.purchase;
 
 import com.demo.unit.domain.store.Store;
 import com.demo.unit.domain.store.StoreRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class PurchaseService {
     private final StoreRepository storeRepository;
 
+    protected PurchaseService() {
+        storeRepository = null;
+    }
+
+    public PurchaseService(StoreRepository storeRepository) {
+        this.storeRepository = storeRepository;
+    }
+
     @Transactional
-    public boolean purchase(long storeId, long productId, int quantity) {
+    public Store purchase(long storeId, long productId, int quantity) {
         Store store = storeRepository.findById(storeId).orElseThrow();
         if (!store.hasEnoughInventory(productId, quantity)) {
-            return false;
+            throw new IllegalStateException("over quantity");
         }
         store.removeInventory(productId, quantity);
-        return false;
+        return storeRepository.save(store);
+    }
+
+    public Store findById(long storeId) {
+        return storeRepository.findById(storeId).orElseThrow();
     }
 }

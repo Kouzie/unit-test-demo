@@ -15,7 +15,7 @@ public class User {
     private UserType type;
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_domain" )
     private Company company;
 

@@ -11,4 +11,17 @@ public enum UserType {
     ;
 
     private final int key;
+
+    /*@JsonCreator
+    public UserType fromJson(String val) {
+        for (UserType value : UserType.values()) {
+            if (val.equals(value.name())) return value;
+        }
+        return null;
+    }
+
+    @JsonValue
+    public String toJson() {
+        return this.name();
+    }*/
 }

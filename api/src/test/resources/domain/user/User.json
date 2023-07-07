@@ -1,0 +1,9 @@
+{
+  "email": "user@gmail.com",
+  "type": "CUSTOMER",
+  "name": "demo-user",
+  "company": {
+    "company_domain_name": "mycorp.com",
+    "number_of_employees": 1
+  }
+}
