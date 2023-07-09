@@ -22,7 +22,7 @@ public class Company {
     }
 
     public void changeNumberOfEmployees(int delta) {
-        Assert.isTrue(numberOfEmployees + delta > 0);
+        Assert.isTrue(numberOfEmployees + delta >= 0);
         numberOfEmployees += delta;
     }
 

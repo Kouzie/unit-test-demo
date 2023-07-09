@@ -2,6 +2,7 @@ package com.demo.unit.domain.user;
 
 import com.demo.unit.domain.company.Company;
 import lombok.Getter;
+import org.springframework.data.jpa.repository.Lock;
 
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ public class User {
     private UserType type;
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "company_domain" )
     private Company company;
 

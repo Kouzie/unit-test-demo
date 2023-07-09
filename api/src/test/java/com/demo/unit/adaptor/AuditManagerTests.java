@@ -4,6 +4,7 @@ import com.demo.unit.adaptor.filesystem.impl.FileContent;
 import com.demo.unit.adaptor.filesystem.impl.FileUpdate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // AuditManager 클래스를 함수형 프로그래밍 방식으로 변경
+@JsonTest
 public class AuditManagerTests {
     DateTimeFormatter dtf = DateTimeFormatter.ISO_DATE_TIME;
 

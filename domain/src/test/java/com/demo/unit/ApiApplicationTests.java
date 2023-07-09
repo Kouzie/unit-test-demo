@@ -2,20 +2,23 @@ package com.demo.unit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class ApiApplicationTests {
 
-    @Test
-    void Test() {
-        // 준비
-        double first = 10l;
-        double second = 20l;
+    @ParameterizedTest
+    @CsvSource(value = {
+            "10,20,30",
+            "3,5,8"
+    })
+    void Test(double first, double second, double expect) {
 
         // 실행
         double result = Calculator.add(first, second);
 
         // 검증
-        Assertions.assertEquals(30, result);
+        Assertions.assertEquals(expect, result);
     }
 
     public static class Calculator {
