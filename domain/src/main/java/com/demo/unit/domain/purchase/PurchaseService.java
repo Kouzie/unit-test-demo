@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PurchaseService {
     private final StoreRepository storeRepository;
 
-    protected PurchaseService() {
+    protected PurchaseService() { // for spy test
         storeRepository = null;
     }
 

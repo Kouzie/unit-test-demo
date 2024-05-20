@@ -1,6 +1,6 @@
 package com.demo.unit.ui.dto;
 
-import com.demo.unit.domain.user.User;
+import com.demo.unit.domain.user.UserEntity;
 import com.demo.unit.domain.user.UserType;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ public class UserDto {
     protected UserDto() {
     }
 
-    public UserDto(User user) {
+    public UserDto(UserEntity user) {
         this.userId = user.getUserId();
         this.email = user.getEmail();
         this.type = user.getType();

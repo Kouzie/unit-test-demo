@@ -3,7 +3,7 @@ package com.demo.unit.ui;
 import com.demo.unit.adaptor.impl.EmailGateway;
 import com.demo.unit.domain.company.Company;
 import com.demo.unit.domain.company.CompanyService;
-import com.demo.unit.domain.user.User;
+import com.demo.unit.domain.user.UserEntity;
 import com.demo.unit.domain.user.UserService;
 import com.demo.unit.domain.user.UserType;
 import com.demo.unit.ui.dto.UserDto;
@@ -37,7 +37,7 @@ public class UserControllerTests {
 
     @Test
     public void rename_user() throws Exception {
-        User user = createUser();
+        UserEntity user = createUser();
         when(service.findById(1l)).thenReturn(user);
         when(service.save(user)).thenReturn(user);
         UserPatchRequestDto requestDto = new UserPatchRequestDto();
@@ -67,12 +67,12 @@ public class UserControllerTests {
 
     }
 
-    private User createUser() {
+    private UserEntity createUser() {
         String email = "test@test.com";
         UserType type = UserType.CUSTOMER;
         String name = "testName";
         Company company = new Company("comp.com", 10);
-        User user = new User(email, type, name, company);
+        UserEntity user = new UserEntity(email, type, name, company);
         return user;
     }
 }

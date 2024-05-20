@@ -16,7 +16,7 @@ public class CommunicationBasedTests {
         Mockito.when(iEmailGateway.sendGreetingEmail("kgy1996@naver.com")).thenReturn(true);
         UserController controller = new UserController(service, iEmailGateway);
         GreetEmailRequestDto request = new GreetEmailRequestDto();
-        request.setEmail("test@test.com");
+        request.setEmail("kgy1996@naver.com");
 
         boolean sut = controller.greetUser(request);
 

@@ -1,15 +1,16 @@
 package com.demo.unit.ui;
 
 import com.demo.unit.adaptor.IEmailGateway;
-import com.demo.unit.domain.user.User;
+import com.demo.unit.domain.user.UserEntity;
 import com.demo.unit.domain.user.UserService;
 import com.demo.unit.ui.dto.ChangeEmailRequestDto;
+import com.demo.unit.ui.dto.GreetEmailRequestDto;
+import com.demo.unit.ui.dto.UserDto;
+import com.demo.unit.ui.dto.UserPatchRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -20,10 +21,16 @@ public class UserController {
     private final UserService service;
     private final IEmailGateway emailGateway;
 
+    @GetMapping("/{userId}")
+    public UserDto getUser(@PathVariable long userId) {
+        UserEntity user = service.findById(userId);
+        return new UserDto(user);
+    }
+
     @PatchMapping("/{userId}")
     public UserDto patchUser(@PathVariable long userId,
                              @Valid @RequestBody UserPatchRequestDto requestDto) {
-        User user = service.findById(userId);
+        UserEntity user = service.findById(userId);
         user.updateName(requestDto.getRename());
         return new UserDto(service.save(user));
     }
@@ -35,7 +42,7 @@ public class UserController {
 
     @PostMapping("/change-email")
     public String changeEmail(@RequestBody ChangeEmailRequestDto request) {
-        User user = service.findById(request.getUserId());
+        UserEntity user = service.findById(request.getUserId());
         user.changeEmail(request.getMail());
         service.save(user);
         return "OK";

@@ -1,11 +1,12 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.5.5' apply false
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+    id 'org.springframework.boot' version "$springBootVersion" apply false
+    id 'io.spring.dependency-management' version "$springDependencyManagement" apply false
+    id 'jacoco'
 }
 
 group = 'com.demo.unit'
-version = '1.0-SNAPSHOT'
+version = "$applicationVersion"
 
 subprojects {
 
@@ -21,20 +22,63 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
-        //implementation 'com.h2database:h2'
-        implementation 'mysql:mysql-connector-java'
+        // runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+        implementation 'com.mysql:mysql-connector-j'
 
-        compileOnly 'org.projectlombok:lombok:1.18.16'
-        annotationProcessor 'org.projectlombok:lombok:1.18.16'
+        compileOnly "org.projectlombok:lombok:$lombomVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombomVersion"
+        testCompileOnly "org.projectlombok:lombok:$lombomVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombomVersion"
 
-        testCompileOnly 'org.projectlombok:lombok:1.18.16'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
-
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation "org.testcontainers:testcontainers:1.17.2"
-        testImplementation "org.testcontainers:junit-jupiter:1.17.2"
-        testImplementation 'org.testcontainers:mysql:1.17.2'
-//        testRuntimeOnly 'com.h2database:h2'
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testImplementation "org.testcontainers:testcontainers:$testContainerVersion"
+        testImplementation "org.testcontainers:junit-jupiter:$testContainerVersion"
+        testImplementation "org.testcontainers:mysql:$testContainerVersion"
+        testRuntimeOnly 'com.h2database:h2' // testcontainer 로 대채
     }
-    test.useJUnitPlatform()
+
+    jacoco {
+        toolVersion = "$jacocoVersion"
+        // 기본 설정되어있음
+        reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+    }
+    // 자동으로 모든 task 의 test 시에 jacoco 설정
+    test {
+        useJUnitPlatform()
+        finalizedBy jacocoTestReport // report is always generated after tests run
+    }
+    // jacoco test 결과를 report 형태로 발행
+    jacocoTestReport {
+        reports {
+//            html.required true
+            //  각 리포트 마다 저장경로 설정 가능
+            html.destination file("$buildDir/jacocoHtml")
+//            xml.required false
+//            csv.required false
+        }
+    }
+
+    // 커버리지 기준 만족여부 확인
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.5
+                }
+            }
+
+            rule {
+                enabled = false
+                element = 'CLASS'
+                includes = ['org.gradle.*']
+
+                limit {
+                    counter = 'LINE'
+                    value = 'TOTALCOUNT'
+                    maximum = 0.3
+                }
+            }
+        }
+    }
+
 }

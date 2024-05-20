@@ -2,7 +2,7 @@ package com.demo.unit.domain.store;
 
 import lombok.Getter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 

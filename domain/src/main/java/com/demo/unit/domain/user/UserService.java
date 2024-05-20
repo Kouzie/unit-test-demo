@@ -12,18 +12,18 @@ public class UserService {
     private final CompanyRepository companyRepository;
 
     @Transactional(readOnly = true)
-    public User findById(long userId) {
+    public UserEntity findById(long userId) {
         return repository.findById(userId).orElseThrow();
     }
 
     @Transactional
-    public User save(User user) {
+    public UserEntity save(UserEntity user) {
         return repository.save(user);
     }
 
     @Transactional
     public void changeEmail(long userId, String newEmail) {
-        User user = repository.findById(userId).orElseThrow();
+        UserEntity user = repository.findById(userId).orElseThrow();
         String emailDomain = newEmail.split("@")[1];
         if (user.getEmail().equals(newEmail)) return;
         user.changeEmail(newEmail);

@@ -1,7 +1,7 @@
 package com.demo.unit;
 
 import com.demo.unit.domain.company.Company;
-import com.demo.unit.domain.user.User;
+import com.demo.unit.domain.user.UserEntity;
 import com.demo.unit.domain.user.UserRepository;
 import com.demo.unit.domain.user.UserType;
 import com.demo.unit.ui.dto.UserDto;
@@ -31,7 +31,7 @@ public class UserControllerEndTests extends MysqlTestContainer {
 
     @Test
     void patch_user_end_to_end() throws Exception {
-        User user = createUser();
+        UserEntity user = createUser();
         user = repository.save(user);
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/user/{userId}", user.getUserId()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -43,12 +43,12 @@ public class UserControllerEndTests extends MysqlTestContainer {
         Assertions.assertEquals(user.getName(), sutUser.getName());
     }
 
-    private User createUser() {
+    private UserEntity createUser() {
         String email = "test@test.com";
         UserType type = UserType.CUSTOMER;
         String name = "testName";
         Company company = new Company("comp.com", 10);
-        User user = new User(email, type, name, company);
+        UserEntity user = new UserEntity(email, type, name, company);
         return user;
     }
 }

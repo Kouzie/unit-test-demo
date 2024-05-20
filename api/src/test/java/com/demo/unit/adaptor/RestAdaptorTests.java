@@ -25,7 +25,7 @@ public class RestAdaptorTests {
     RestAdaptor adaptor;
 
     @Test
-    void test() throws IOException {
+    void testRestAdaptor() throws IOException {
         Long id = 1l;
         ClassPathResource cpr = new ClassPathResource("adaptor/RestUserPost.json");
         byte[] bdata = FileCopyUtils.copyToByteArray(cpr.getInputStream());
@@ -36,7 +36,7 @@ public class RestAdaptorTests {
 
         RestUserPost sut = adaptor.findPostById(1l);
 
-        Assertions.assertEquals(1, sut.getTitle());
+        Assertions.assertEquals(1, sut.getId());
         Assertions.assertEquals("dummy post title", sut.getTitle());
     }
 }

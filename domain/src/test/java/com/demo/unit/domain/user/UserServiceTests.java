@@ -11,7 +11,7 @@ public class UserServiceTests {
     @Test
     void changing_email_from_non_corporate_to_corporate() {
         Company company = new Company("mycorp.com", 1);
-        User sut = new User("user@gmail.com", UserType.CUSTOMER, "demo-user", company);
+        UserEntity sut = new UserEntity("user@gmail.com", UserType.CUSTOMER, "demo-user", company);
 
         sut.changeEmail("new@mycorp.com");
 

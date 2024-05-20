@@ -19,7 +19,7 @@ import java.io.IOException;
 public class UserJsonTests {
 
     @Autowired
-    private JacksonTester<User> json;
+    private JacksonTester<UserEntity> json;
 
     @BeforeAll
     static void beforeAll(@Autowired ObjectMapper objectMapper) {
@@ -29,12 +29,12 @@ public class UserJsonTests {
     @Test
     void json_serialize_user() throws IOException {
         Company company = new Company("mycorp.com", 1);
-        User user = new User("user@gmail.com", UserType.CUSTOMER, "demo-user", company);
-        JsonContent<User> userJson = json.write(user);
+        UserEntity user = new UserEntity("user@gmail.com", UserType.CUSTOMER, "demo-user", company);
+        JsonContent<UserEntity> userJson = json.write(user);
         System.out.println(userJson.getJson());
         File file = new ClassPathResource("domain/user/User.json").getFile();
 
-        User sut = json.read(file).getObject();
+        UserEntity sut = json.read(file).getObject();
 
         Assertions.assertEquals(user.getName(), sut.getName());
         Assertions.assertEquals(user.getEmail(), sut.getEmail());

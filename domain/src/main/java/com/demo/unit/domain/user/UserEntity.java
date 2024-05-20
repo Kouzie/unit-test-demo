@@ -4,11 +4,11 @@ import com.demo.unit.domain.company.Company;
 import lombok.Getter;
 import org.springframework.data.jpa.repository.Lock;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Entity
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -16,14 +16,14 @@ public class User {
     private UserType type;
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "company_domain" )
     private Company company;
 
-    protected User() {
+    protected UserEntity() {
     }
 
-    public User(String email, UserType type, String name, Company company) {
+    public UserEntity(String email, UserType type, String name, Company company) {
         this.email = email;
         this.type = type;
         this.name = name;

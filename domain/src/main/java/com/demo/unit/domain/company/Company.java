@@ -1,10 +1,9 @@
 package com.demo.unit.domain.company;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import org.springframework.util.Assert;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Getter
 @Entity
@@ -22,7 +21,8 @@ public class Company {
     }
 
     public void changeNumberOfEmployees(int delta) {
-        Assert.isTrue(numberOfEmployees + delta >= 0);
+        Assert.isTrue(numberOfEmployees + delta >= 0,
+                "numberOfEmployeses is over then 0");
         numberOfEmployees += delta;
     }
 

@@ -19,7 +19,7 @@ public class PurchaseServiceTests {
         int quantity = 10;
         long storeId = 1;
         Store store = createStore(productId, quantity);
-         StoreRepository storeRepository = Mockito.mock(StoreRepository.class);
+        StoreRepository storeRepository = Mockito.mock(StoreRepository.class);
         PurchaseService service = new PurchaseService(storeRepository);
         Mockito.when(storeRepository.findById(storeId))
                 .thenReturn(Optional.of(store));
@@ -28,7 +28,7 @@ public class PurchaseServiceTests {
         Store sut = service.purchase(storeId, productId, 3);
         Assertions.assertEquals(quantity - 3, sut.getInventory(productId));
         Mockito.verify(storeRepository, Mockito.times(1)).findById(storeId);
-        Mockito.verify(storeRepository, Mockito.times(2)).save(ArgumentMatchers.any(Store.class));
+        Mockito.verify(storeRepository, Mockito.times(1)).save(ArgumentMatchers.any(Store.class));
     }
 
     private Store createStore(long productId, int quantity) {

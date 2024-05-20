@@ -3,7 +3,7 @@ package com.demo.unit.integration;
 import com.demo.unit.adaptor.IEmailGateway;
 import com.demo.unit.domain.company.Company;
 import com.demo.unit.domain.company.CompanyRepository;
-import com.demo.unit.domain.user.User;
+import com.demo.unit.domain.user.UserEntity;
 import com.demo.unit.domain.user.UserRepository;
 import com.demo.unit.domain.user.UserService;
 import com.demo.unit.domain.user.UserType;
@@ -16,8 +16,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
+// jpa test with h2db
 @DataJpaTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 @ExtendWith(MockitoExtension.class)
 public class UserServiceIntegrationTests {
     @Autowired
@@ -26,11 +29,10 @@ public class UserServiceIntegrationTests {
     @Autowired
     CompanyRepository companyRepository;
 
-
     @Test
     void changing_email_from_corporate_to_non_corporate() {
         Company company = createCompany("mycorp.com", 1);
-        User user = createUser("user@mycorp.com", UserType.EMPLOYEE, company);
+        UserEntity user = createUser("user@mycorp.com", UserType.EMPLOYEE, company);
         ChangeEmailRequestDto requestDto = new ChangeEmailRequestDto(user.getUserId(), "new@gmail.com");
         UserService userService = new UserService(userRepository, companyRepository);
         IEmailGateway iEmailGateway = Mockito.mock(IEmailGateway.class);
@@ -40,7 +42,7 @@ public class UserServiceIntegrationTests {
 
         Assertions.assertEquals("OK", result);
 
-        User userFromDb = userRepository.findById(user.getUserId()).orElseThrow();
+        UserEntity userFromDb = userRepository.findById(user.getUserId()).orElseThrow();
         UserExtensions userExtensions = new UserExtensions();
         userExtensions
                 .shouldExist(userFromDb)
@@ -51,30 +53,30 @@ public class UserServiceIntegrationTests {
         Assertions.assertEquals(0, companyFromDb.getNumberOfEmployees());
     }
 
-    private User createUser(String email, UserType type, Company company) {
-        User user = new User(email, type, "test-user", company);
+    private UserEntity createUser(String email, UserType type, Company company) {
+        UserEntity user = new UserEntity(email, type, "test-user", company);
         user = userRepository.save(user);
         return user;
     }
 
     private Company createCompany(String domainName, int numberOfEmployees) {
         Company company = new Company(domainName, numberOfEmployees);
-        companyRepository.save(company);
+        company = companyRepository.save(company);
         return company;
     }
 
     public class UserExtensions {
-        public UserExtensions shouldExist(User user) {
+        public UserExtensions shouldExist(UserEntity user) {
             Assertions.assertNotNull(user);
             return this;
         }
 
-        public UserExtensions withType(User user, UserType userType) {
+        public UserExtensions withType(UserEntity user, UserType userType) {
             Assertions.assertEquals(userType, user.getType());
             return this;
         }
 
-        public UserExtensions withEmail(User user, String email) {
+        public UserExtensions withEmail(UserEntity user, String email) {
             Assertions.assertEquals(email, user.getEmail());
             return this;
         }
