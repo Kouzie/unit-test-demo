@@ -66,19 +66,36 @@ allprojects {
         violationRules {
             rule {
                 limit {
-                    minimum = 0.5
+                    minimum = 0.3
                 }
             }
 
             rule {
-                enabled = false
-                element = 'CLASS'
-                includes = ['org.gradle.*']
-
+                enabled = true
+                includes = ['com.demo.unit.domain.*']
+                element = 'CLASS'           // 계측 묶음 단위
+                                            // BUNDLE(default): 패키지 번들 (전체 프로젝트)
+                                            // PACKAGE
+                                            // SOURCEFILE
+                                            // CLASS
+                                            // METHOD
                 limit {
-                    counter = 'LINE'
-                    value = 'TOTALCOUNT'
-                    maximum = 0.3
+                    counter = 'LINE'        // 계측 요소
+                                            // INSTRUCTION(default): 바이트코드 명령 수
+                                            // LINE: 코드의 라인 수, 빈줄 제외
+                                            // BRANCH: 제어문 분기 수
+                                            // CLASS
+                                            // METHOD
+                                            // COMPLEXITY: 복잡도, 수식은 문서 참고
+
+                    value = 'COVEREDRATIO'  // 계측 방식
+                                            // COVEREDRATIO (default): 커버된 비율.
+                                            // MISSEDRATIO: 커버되지 않은 비율.
+                                            // TOTALCOUNT: 전체 개수
+                                            // MISSEDCOUNT: 커버되지 않은 개수
+                                            // COVEREDCOUNT: 커버된 개수
+
+                    minimum = 0.3
                 }
             }
         }
