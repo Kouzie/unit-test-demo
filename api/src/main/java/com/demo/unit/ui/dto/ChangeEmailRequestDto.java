@@ -1,11 +1,17 @@
 package com.demo.unit.ui.dto;
 
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class ChangeEmailRequestDto {
-    private final Long userId;
-    private final String mail;
+    private Long userId;
+    private String mail;
 
+    protected ChangeEmailRequestDto() {
+    }
 }

@@ -6,6 +6,8 @@ import com.demo.unit.adaptor.filesystem.impl.FileContent;
 import com.demo.unit.adaptor.filesystem.impl.FileUpdate;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -14,8 +16,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/audit")
 public class AuditController {
-
 
     private Persister persister;
     private String directoryName;
@@ -28,6 +30,7 @@ public class AuditController {
         this.persister = new Persister();
     }
 
+    @PostMapping
     public void addRecord(String visitorName, LocalDateTime timeOfVisit) throws IOException {
         // 공유 의존성을 가지는 persister 사용
         List<FileContent> files = persister.readDirectory(directoryName);

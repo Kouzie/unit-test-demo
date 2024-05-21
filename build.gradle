@@ -9,6 +9,7 @@ group = 'com.demo.unit'
 version = "$applicationVersion"
 
 subprojects {
+    apply plugin: 'jacoco'
 
     repositories {
         mavenCentral()
@@ -37,24 +38,26 @@ subprojects {
         testRuntimeOnly 'com.h2database:h2' // testcontainer 로 대채
     }
 
+    test.useJUnitPlatform()
+}
+
+allprojects {
     jacoco {
         toolVersion = "$jacocoVersion"
         // 기본 설정되어있음
-        reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+        // reportsDirectory = layout.buildDirectory.dir("reports/jacoco/test")
     }
     // 자동으로 모든 task 의 test 시에 jacoco 설정
     test {
-        useJUnitPlatform()
         finalizedBy jacocoTestReport // report is always generated after tests run
     }
     // jacoco test 결과를 report 형태로 발행
     jacocoTestReport {
         reports {
-//            html.required true
-            //  각 리포트 마다 저장경로 설정 가능
-            html.destination file("$buildDir/jacocoHtml")
-//            xml.required false
-//            csv.required false
+            html.required = true
+            csv.required = false
+            xml.required = false
+            // html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
         }
     }
 
@@ -80,5 +83,4 @@ subprojects {
             }
         }
     }
-
 }

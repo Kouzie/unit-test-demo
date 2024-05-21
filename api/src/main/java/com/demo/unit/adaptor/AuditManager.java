@@ -26,7 +26,7 @@ public class AuditManager {
 //        this.fileSystem = filesystem;
     }
 
-    public FileUpdate addRecord(List<FileContent> files, String visitorName, LocalDateTime timeOfVisit) throws IOException {
+    public FileUpdate addRecord(List<FileContent> files, String visitorName, LocalDateTime timeOfVisit) {
         String newRecord = visitorName + ";" + dtf.format(timeOfVisit);
         if (files == null || files.size() == 0) {
             return new FileUpdate("audit_1.txt", newRecord);

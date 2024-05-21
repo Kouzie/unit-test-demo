@@ -2,6 +2,8 @@ package com.demo.unit.adaptor.filesystem;
 
 import com.demo.unit.adaptor.filesystem.impl.FileContent;
 import com.demo.unit.adaptor.filesystem.impl.FileUpdate;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
@@ -11,38 +13,25 @@ import java.util.stream.Collectors;
 
 public class PersisterTests {
 
-    public List<FileContent> readDirectory(String directoryName) throws IOException {
-        File dir = new ClassPathResource(directoryName).getFile();
-        String dirPath = dir.getPath();
-        String[] fileNames = dir.list();
-        List<FileContent> result = new ArrayList<>();
-        for (String fileName : fileNames) {
-            FileContent fileContent = new FileContent(fileName, readAllLines(dirPath + fileName));
-            result.add(fileContent);
-        }
-        return result;
+    Persister persister = new Persister();
+
+    @Test
+    void readDirectory() throws IOException {
+        String directoryName = "audit";
+
+        List<FileContent> sut = persister.readDirectory(directoryName);
+
+        Assertions.assertEquals(1, sut.size());
+        Assertions.assertEquals( "audit_1.txt", sut.get(0).getFileName());
+        Assertions.assertEquals(1, sut.get(0).getLines().size());
     }
 
-    private List<String> readAllLines(String filePath) throws IOException {
-        File file = new File(filePath);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            return reader.lines().collect(Collectors.toList());
-        } catch (IOException e) {
-            throw e;
-        }
-    }
+    @Test
+    void applyUpdate() throws IOException {
+        String directoryName = "";
+        String contents = "hello world";
+        FileUpdate update = new FileUpdate("audit_1.txt", contents);
 
-    public void applyUpdate(String directoryName, FileUpdate update) throws IOException {
-        File dir = new ClassPathResource(directoryName).getFile();
-        String dirPath = dir.getPath();
-        String filePath = dirPath + update.getFileName();
-        File file = new File(filePath);
-        // file 에 문자열 추가
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.newLine();
-            writer.append(update.getNewContent() );
-        } catch (IOException e) {
-            throw e;
-        }
+        persister.applyUpdate(directoryName, update);
     }
 }

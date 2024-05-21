@@ -17,7 +17,7 @@ public class Persister {
         String[] fileNames = dir.list();
         List<FileContent> result = new ArrayList<>();
         for (String fileName : fileNames) {
-            FileContent fileContent = new FileContent(fileName, readAllLines(dirPath + fileName));
+            FileContent fileContent = new FileContent(fileName, readAllLines(dirPath + "/" + fileName));
             result.add(fileContent);
         }
         return result;
