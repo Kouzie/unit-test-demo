@@ -1,5 +1,7 @@
 package com.demo.unit;
 
+import com.demo.unit.domain.delivery.Delivery;
+import com.demo.unit.domain.delivery.DeliveryService;
 import com.demo.unit.domain.product.Product;
 import com.demo.unit.domain.store.Store;
 import org.junit.jupiter.api.Assertions;

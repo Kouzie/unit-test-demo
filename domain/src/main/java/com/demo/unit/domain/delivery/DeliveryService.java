@@ -1,4 +1,4 @@
-package com.demo.unit;
+package com.demo.unit.domain.delivery;
 
 import java.time.LocalDateTime;
 
